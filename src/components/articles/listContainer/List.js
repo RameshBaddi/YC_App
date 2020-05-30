@@ -1,11 +1,16 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useCallback } from 'react'
 import UpVoteIcon from './UpVoteIcon'
 import { ListContext } from '../../../AppContext/ListContext'
 
 const List = () => {
-    const {listData, handleHide, hiddenList} = useContext(ListContext)
+    const {listData, handleHide, hiddenList, upVote} = useContext(ListContext)
 
-    const renderList = () => {
+    const handleVote = useCallback((e, objectID, i) =>{
+        e.stopPropagation()
+        upVote(objectID, i)
+    },[upVote]) 
+
+    const renderList = useCallback(() => {
         let listEl = listData.map((topic, i) => {
 
             if(!hiddenList.includes(topic.objectID)) {
@@ -20,7 +25,7 @@ const List = () => {
                             </p>
                         </div>
                         <div className='col-1'>
-                            <UpVoteIcon />
+                            <i  onClick={(e) => handleVote(e, topic.objectID, i)}><UpVoteIcon /></i>
                         </div>
                         <div className='col-1'>
                             {topic.num_comments ? topic.num_comments : 0}
@@ -30,21 +35,23 @@ const List = () => {
                         </div>
                     </div>
                 </section>
+            } else {
+                return null
             }
+            
         })
-
         return listEl
-    }
+    }, [listData, handleHide, hiddenList, handleVote]) 
 
     useEffect(() => {
         renderList()
-    }, [hiddenList])
+    }, [hiddenList, renderList])
 
     return (
         <>
             {listData.length 
                 ? renderList()
-                : <p className='text-center'>No topics found</p>
+                : <p className='text-center p-4'>No topics found</p>
             }
         </>
     )

@@ -34,7 +34,7 @@ const ListContainer = () => {
                         <small><span className=''>Active page - <b>{page + 1}</b></span></small>
                     </div>
                     <div className='col text-right'>
-                        <button className='btn btn-secondary mr-2' onClick={() => fetchListData(page - 1)} disabled={page == 0}>Prev</button>
+                        <button className='btn btn-secondary mr-2' onClick={() => fetchListData(page - 1)} disabled={page === 0}>Prev</button>
                         <button className='btn btn-secondary' onClick={() => fetchListData(page + 1)}>Next</button>
                     </div>
                 </div>

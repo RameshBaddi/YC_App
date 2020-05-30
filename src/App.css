@@ -2,6 +2,19 @@
   text-align: center;
 }
 
+header {
+  background: #623fb5;
+  box-shadow: 0 0 10px rgba(0,0,0,.4);
+}
+
 .mainContainer {
   box-shadow: 0 0 15px rgba(0,0,0,.1);
+}
+
+.voteIcon {
+  cursor: pointer;
+}
+
+.voteIcon:hover {
+  transform: scale(1.2)
 }

@@ -3,13 +3,14 @@ import React from "react";
 const UpVoteIcon = () => {
   return (
     <svg
+      className='voteIcon'
       version="1.1"
       id="Capa_1"
       xmlns="http://www.w3.org/2000/svg"
       height="24"
       width="24"
       viewBox="0 0 512 512"
-      fill="#999"
+      fill="#20c997"
     >
       <g>
         <g>

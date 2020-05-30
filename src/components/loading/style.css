@@ -1,0 +1,10 @@
+.statusBar {
+    position: fixed;
+    bottom: 2rem;
+    left: 0;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+    z-index: 10;
+    right: 0;
+    width: 280px;
+    margin: 0 auto;
+}

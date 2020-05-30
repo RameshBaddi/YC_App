@@ -1,4 +1,5 @@
-import React, { createContext, useState, Component } from 'react'
+import React, { createContext, Component } from 'react'
+import {fetchApi} from './fetchApi'
 
 export const ListContext = createContext()
 
@@ -8,6 +9,7 @@ class ListContextProvider extends Component {
         super(props)
 
         this.state = {
+            fetchingData: false,
             listData: [],
             page: 0,
             chartData: [],
@@ -19,26 +21,67 @@ class ListContextProvider extends Component {
     componentDidMount(){
         this.fetchListData()
     }
+
+    generateChartData = async () => {
+        let chartData = await this.state.listData.map((ls, i) => {
+            return {
+                title: ls.title,
+                id: ls.objectID,
+                name: ls.title,
+                votes: ls.points,
+                comments: ls.num_comments ? ls.num_comments : 0
+            }
+        })
+
+        this.setState({
+            chartData
+        })
+    }
     
     fetchListData = async (page=0) => {
-        const url = `https://hn.algolia.com/api/v1/search?page=${page}&hitsPerPage=10`
-        let data = []
-        try {
-            let res = await fetch(url)
-            data = await res.json()
+        this.setState({fetchingData: true})
+        let data = await fetchApi(page)
+
+        if(data.hits) {
             this.setState({
                 listData: data.hits,
-                page,
+                page
             })
-        } catch(err) {
-            console.log(err)
-        }
+        } 
+        
+        this.generateChartData()
+        this.hideStatusBar()
     }
 
     handleHide = (id) => {
         this.setState({
             hiddenList: [...this.state.hiddenList, id]
         })
+    }
+
+    hideStatusBar = () => {
+        setTimeout(() => {
+            this.setState({
+                fetchingData: false
+            })
+        },2000)   
+    }
+
+    upVote = async (id, idx) => {
+        await this.setState(prevState => ({
+            ...prevState,
+            listData: prevState.listData.map((el, i) => {
+                if(i === idx) {
+                    return {
+                        ...prevState.listData[idx],
+                        points : prevState.listData[idx].points + 1
+                    }
+                } else {
+                    return el
+                }
+            })
+        }))
+        this.generateChartData()
     }
 
     render(){
