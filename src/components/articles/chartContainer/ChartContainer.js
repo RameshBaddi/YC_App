@@ -2,9 +2,9 @@ import React from 'react'
 
 const ChartContainer = () => {
     return (
-        <div>
+        <section className='p-3 bg-light mt-3 mb-3'>
             Chart
-        </div>
+        </section>
     )
 }
 

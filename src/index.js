@@ -5,10 +5,14 @@ import './assets/css/bootstrap.min.css'
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import ListContextProvider from './AppContext/ListContext'
+
 
 ReactDOM.hydrate(
   <React.StrictMode>
-    <App />
+    <ListContextProvider>
+      <App />
+    </ListContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

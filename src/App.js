@@ -9,7 +9,7 @@ function App() {
     return (
         <div className="App">
             <Header />
-            <div className="container bg-white mainContainer pt-2 mt-4">
+            <div className="container bg-white mainContainer pt-2 mt-4 pb-2">
                 <Main />
             </div>
             <Footer />
