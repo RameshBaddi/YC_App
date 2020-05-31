@@ -40,6 +40,7 @@ const List = () => {
             }
             
         })
+
         return listEl
     }, [listData, handleHide, hiddenList, handleVote]) 
 

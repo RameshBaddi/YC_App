@@ -19,7 +19,31 @@ class AppContextProvider extends Component {
     }
 
     componentDidMount(){
-        this.fetchListData()
+
+        try {
+            let localStore = localStorage.getItem('store')
+
+            if(localStore) {
+                let store = JSON.parse(localStore)
+                this.setState({
+                    ...store
+                })   
+            } else {
+                this.fetchListData()
+            }
+        }
+        catch(err)  {
+            console.log(err)
+            //this.fetchListData()
+        }
+        
+    }
+
+    componentDidUpdate(prevProp, prevState) {
+        if(prevProp !== prevState){
+            localStorage.setItem('store', {})
+            localStorage.setItem('store', JSON.stringify(this.state))
+        }
     }
 
     generateChartData = async () => {
