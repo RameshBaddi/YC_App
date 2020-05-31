@@ -11,7 +11,7 @@ const List = () => {
     },[upVote]) 
 
     const renderList = useCallback(() => {
-        let listEl = listData.map((topic, i) => {
+        let listEl = listData ? listData.map((topic, i) => {
 
             if(!hiddenList.includes(topic.objectID)) {
 
@@ -39,7 +39,7 @@ const List = () => {
                 return null
             }
             
-        })
+        }) : []
 
         return listEl
     }, [listData, handleHide, hiddenList, handleVote]) 

@@ -19,12 +19,22 @@ class AppContextProvider extends Component {
     }
 
     componentDidMount(){
+       this.setDataOnRender()
+    }
 
+    componentDidUpdate(prevProp, prevState) {
+        if(prevProp !== prevState){
+            localStorage.setItem('store', {})
+            localStorage.setItem('store', JSON.stringify(this.state))
+        }
+    }
+
+    setDataOnRender = async () => {
         try {
-            let localStore = localStorage.getItem('store')
+            let localStore = await localStorage.getItem('store')
 
             if(localStore) {
-                let store = JSON.parse(localStore)
+                let store = await JSON.parse(localStore)
                 this.setState({
                     ...store
                 })   
@@ -34,15 +44,7 @@ class AppContextProvider extends Component {
         }
         catch(err)  {
             console.log(err)
-            //this.fetchListData()
-        }
-        
-    }
-
-    componentDidUpdate(prevProp, prevState) {
-        if(prevProp !== prevState){
-            localStorage.setItem('store', {})
-            localStorage.setItem('store', JSON.stringify(this.state))
+            this.fetchListData()
         }
     }
 

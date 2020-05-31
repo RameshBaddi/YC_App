@@ -1,9 +1,18 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { fetchApi } from "./AppContext/fetchApi";
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("Fetch API testing", () => {
+  let data
+  it("Async fetch function: Has response", async () => {
+    data = await fetchApi();
+    expect(Object.keys(data).length).toBeGreaterThan(0);
+  });
+
+  it("Async fetch function: Has hits object", async () => {
+    expect(Object.keys(data)[0]).toEqual("hits");
+  });
+
+  it("Async fetch function: Has data in hits object", async () => {
+    expect(data.hits.length).toBeGreaterThan(0);
+  });
 });
