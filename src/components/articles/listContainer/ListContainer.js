@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import List from './List'
 
-import {ListContext} from '../../../AppContext/ListContext'
+import {AppContext} from '../../../AppContext/AppContext'
 
 const ListContainer = () => {
 
-    const {fetchListData, page} = useContext(ListContext)
+    const {fetchListData, page} = useContext(AppContext)
 
     return (
         <article className='container-fluid pt-3'>

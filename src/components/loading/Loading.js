@@ -1,20 +1,20 @@
 import React, { useEffect, useContext, useCallback } from 'react'
-import { ListContext } from '../../AppContext/ListContext'
+import { AppContext } from '../../AppContext/AppContext'
 import './style.css'
 
 const Loading = () => {
     
-    const { fetchingData } = useContext(ListContext)
+    const { fetchingStatus } = useContext(AppContext)
     
     const renderLoading = useCallback(() => {
-        return fetchingData 
+        return fetchingStatus 
             ? <span className='statusBar bg-success text-white p-3 rounded'>Fetching new stories...</span>
             : <></>
-    }, [fetchingData])
+    }, [fetchingStatus])
     
     useEffect( ()=> {
         renderLoading()
-    }, [fetchingData, renderLoading])
+    }, [fetchingStatus, renderLoading])
 
     return (
         renderLoading()

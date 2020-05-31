@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react'
 import RenderChart from './RenderChart'
-import { ListContext } from '../../../AppContext/ListContext';
+import { AppContext } from '../../../AppContext/AppContext';
 
 const ChartContainer = () => {
-    const {listData, chartData} = useContext(ListContext)
+    const {listData, chartData} = useContext(AppContext)
     const [width, setWidth] = useState(800)
 
     const renderChart = useCallback(() => {
@@ -29,7 +29,7 @@ const ChartContainer = () => {
     return (
         <section className='p-3 bg-light mt-3 mb-3'>
             <div className='pt-4 chartContainer'>
-                {listData.length
+                {listData && listData.length
                     ? renderChart()
                     : <p>No chart data</p>
                 }

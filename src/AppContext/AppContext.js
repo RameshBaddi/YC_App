@@ -1,15 +1,15 @@
 import React, { createContext, Component } from 'react'
 import {fetchApi} from './fetchApi'
 
-export const ListContext = createContext()
+export const AppContext = createContext({})
 
-class ListContextProvider extends Component {
+class AppContextProvider extends Component {
 
     constructor(props){
         super(props)
 
         this.state = {
-            fetchingData: false,
+            fetchingStatus: false,
             listData: [],
             page: 0,
             chartData: [],
@@ -39,18 +39,24 @@ class ListContextProvider extends Component {
     }
     
     fetchListData = async (page=0) => {
-        this.setState({fetchingData: true})
-        let data = await fetchApi(page)
+        this.setState({fetchingStatus: true})
 
-        if(data.hits) {
-            this.setState({
-                listData: data.hits,
-                page
-            })
-        } 
-        
-        this.generateChartData()
-        this.hideStatusBar()
+        try{
+            let data = await fetchApi(page)
+
+            if(data.hits) {
+                this.setState({
+                    listData: data.hits,
+                    page
+                })
+            } 
+            
+            this.generateChartData()
+            this.hideStatusBar()
+        } catch (err){
+            console.log(err)
+        }
+      
     }
 
     handleHide = (id) => {
@@ -59,10 +65,10 @@ class ListContextProvider extends Component {
         })
     }
 
-    hideStatusBar = () => {
-        setTimeout(() => {
+    hideStatusBar = async () => {
+        await setTimeout(() => {
             this.setState({
-                fetchingData: false
+                fetchingStatus: false
             })
         },2000)   
     }
@@ -87,11 +93,11 @@ class ListContextProvider extends Component {
     render(){
         const { children } = this.props
         return (
-            <ListContext.Provider value={{...this, ...this.state}}>
+            <AppContext.Provider value={{...this, ...this.state}}>
                 {children}
-            </ListContext.Provider>
+            </AppContext.Provider>
         )
     }
 }
 
-export default ListContextProvider
+export default AppContextProvider

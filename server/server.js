@@ -11,7 +11,7 @@ import { renderToString } from 'react-dom/server'
 import App from '../src/App'
 
 const app = express()
-const PORT = 8000
+const PORT = process.env.PORT || 8000
 
 app.get('/', async (req, res, next) => {
     const indexFile = path.resolve(__dirname, '..', 'build/index.html')

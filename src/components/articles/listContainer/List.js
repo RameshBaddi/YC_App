@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useCallback } from 'react'
 import UpVoteIcon from './UpVoteIcon'
-import { ListContext } from '../../../AppContext/ListContext'
+import { AppContext } from '../../../AppContext/AppContext'
 
 const List = () => {
-    const {listData, handleHide, hiddenList, upVote} = useContext(ListContext)
+    const {listData, handleHide, hiddenList, upVote} = useContext(AppContext)
 
     const handleVote = useCallback((e, objectID, i) =>{
         e.stopPropagation()
@@ -49,7 +49,7 @@ const List = () => {
 
     return (
         <>
-            {listData.length 
+            {listData && listData.length 
                 ? renderList()
                 : <p className='text-center p-4'>No topics found</p>
             }
